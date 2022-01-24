@@ -12,8 +12,8 @@ class Landingpage extends React.Component {
     render() {
        return (
            <div>
-               <Grid style={{backgroundColor:'#e6f5ff',height:'100vh'}}>
-                    <span style={{padding:'40px',fontSize:'20px'}} >worthWatch</span>
+               <Grid style={{backgroundColor:'#DDDDDD',height:'100vh'}}>
+                    <span style={{padding:'40px',fontSize:'20px'}} ><b>worthWatch</b></span>
                     <Paper elevation={20} style={paperStyle}>
                     <h4 style={{margin:'15px'}}>Discover & Watch More</h4>
                         <Button fullWidth variant="outlined" size="medium" style={buttonStyle}>Continue with Google</Button>

@@ -3,7 +3,7 @@ import { authHeader } from '../_helpers';
 
 import axios from 'axios';
 
-const API_URL = 'http://localhost:9001';
+const API_URL = 'http://localhost:8080';
 
 export const userService = {
     login,

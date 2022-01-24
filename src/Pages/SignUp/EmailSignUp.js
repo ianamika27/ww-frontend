@@ -57,7 +57,7 @@ class EmailSignup extends React.Component {
         const { registering  } = this.props;
         const { user, submitted } = this.state;
         return (
-            <Grid style={{backgroundColor:'#e6f5ff',height:'100vh'}}>
+            <Grid style={{backgroundColor:'#DDDDDD',height:'100vh'}}>
                 <span style={{padding:'40px',fontSize:'20px'}} >worthWatch</span>
                 <Paper elevation={10} style={paperStyle}>
                     <h4>Sign up for worthWatch</h4>

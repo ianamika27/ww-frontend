@@ -50,7 +50,7 @@ class EmailSignIn extends React.Component {
         const { username, password, submitted } = this.state;
 
         return(
-            <Grid style={{backgroundColor:'#e6f5ff',height:'100vh'}}>
+            <Grid style={{backgroundColor:'#DDDDDD',height:'100vh'}}>
                 <span style={{padding:'40px',fontSize:'20px'}} >worthWatch</span>
                 <Paper elevation={20} style={paperStyle}>
                     <Grid align='center'>   
