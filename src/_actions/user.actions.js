@@ -3,13 +3,24 @@ import { userService } from '../_services';
 import { alertActions } from './';
 import { history } from '../_helpers';
 
+import AuthService from '../_services/AuthService';
+import Api from '../_services/api'
+
 export const userActions = {
     login,
-    logout,
+    logout, 
     register,
     getAll,
-    delete: _delete
+    delete: _delete,
+    loginOAuthGoogle
 };
+
+
+const authService = new AuthService(new Api());
+
+const request = (user) => { return { type: userConstants.LOGIN_REQUEST, user } }
+const success = (user) =>  { return { type: userConstants.LOGIN_SUCCESS, user } }
+const failure = (error) =>  { return { type: userConstants.LOGIN_FAILURE, error } }
 
 function login(username, password) {
     return dispatch => {
@@ -35,7 +46,7 @@ function login(username, password) {
 
 function logout() {
     userService.logout();
-    //history.push('/landingpage');
+    history.push('/landingpage');
     return { type: userConstants.LOGOUT };
 }
 
@@ -93,4 +104,23 @@ function _delete(id) {
     function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
     function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
     function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
+}
+
+function loginOAuthGoogle(){
+    return (dispatch) => {
+        function receiveMessage(event) {
+            if (event.origin !== Api.url) {
+                dispatch(failure(`Couldn't login via OAuth Google!`));
+                return;
+            }
+            if(event.data) {
+                localStorage.setItem('user', event.data);
+                const data = JSON.parse(event.data);
+                dispatch(success(data.user.email));
+                history.push('/homepage');
+            }
+        }
+        window.open(`${Api.url}/api/auth/google`, 'Google OAuth', "height=615,width=605"); 
+        window.addEventListener("message", receiveMessage, false);
+    }
 }

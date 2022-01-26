@@ -19,6 +19,9 @@ export function authentication(state = initialState, action) {
       return {};
     case userConstants.LOGOUT:
       return {};
+    case userConstants.GOOGLE_OAUTH2: {
+        return action.googleResponse;
+    }  
     default:
       return state
   }
