@@ -55,6 +55,9 @@ class Header extends React.Component {
 
     render() {
         
+        const { user } = this.props;
+        console.log("user header", user)
+
         const { loggingIn } = this.props;
         
         const { auth, anchorEl } = this.state;
@@ -73,7 +76,7 @@ class Header extends React.Component {
                         <Link href="/" style={{textDecoration: "none", color: "white", marginRight: '20px', display: 'flex'}}><Button variant="text" size="medium" style={{fontSize:'15px'}}>Browse</Button></Link>
                         
                         <div style={{marginLeft: "auto",marginRight: -11}}>
-                        
+                        Hi, {user.user.email}
                         <IconButton
                             aria-owns={open ? 'menu-appbar' : null}
                             aria-haspopup="true"
@@ -106,10 +109,11 @@ class Header extends React.Component {
 }
 
 function mapState(state) {
-    // console.log('state header');
-    // console.log(state)
-    const { loggingIn } = state.authentication;
-    return { loggingIn };
+    console.log('header state ');console.log(state)
+    const {  authentication } = state;
+    console.log('header authentication ');console.log(authentication)
+    const { user } = authentication;
+    return { user };
 }
 
 const actionCreators = {

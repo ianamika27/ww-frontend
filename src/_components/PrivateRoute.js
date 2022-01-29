@@ -1,12 +1,8 @@
 import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={props => (
-        localStorage.getItem('user')
-            ? <Component {...props} />
-            : <Navigate to={{ pathname: '/landingpage', state: { from: props.location } }} />
-    )} />
-)
+const PrivateRoute = ({ isLogged }) => {
+    return isLogged ? <Outlet/> : <Navigate to="/login" />;
+};
 
 export default PrivateRoute;

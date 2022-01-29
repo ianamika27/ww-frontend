@@ -42,7 +42,7 @@ function login(email, password) {
 
 function logout() {
     authService.logout();
-    history.push('/landingpage');
+    history.push('/login');
     return { type: userConstants.LOGOUT };
 }
 

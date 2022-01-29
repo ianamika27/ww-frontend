@@ -19,7 +19,7 @@ class Homepage extends React.Component {
 
     render() {
         const { user } = this.props;
-        console.log("user header", user)
+        console.log("user homepage", user)
         
         return (
             <div className="col-md-12 col-md-offset-0" style={{'padding':'0px',height:'100vh',background: '#fff'}}>
@@ -105,7 +105,7 @@ class Homepage extends React.Component {
                             </Grid>
                         </Grid>
                     </div>
-                    <div className='col-md-1'>{user.user.email}</div>
+                    <div className='col-md-1'></div>
                 </div>
                 <Footer/>
             </div>

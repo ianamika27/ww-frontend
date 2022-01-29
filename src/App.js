@@ -12,7 +12,6 @@ import MyShows from './Pages/MyShows';
 import Homepage from './Pages/Homepage';
 import SignIn from './Pages/SignIn/SignIn'
 import SignUp from './Pages/SignUp/SignUp';
-import Landingpage from './Pages/Landingpage';
 
 class App extends React.Component {
 
@@ -27,16 +26,17 @@ class App extends React.Component {
 
   render() {
     const { alert } = this.props;
+    let { isLogged } = false;
+    isLogged = localStorage.getItem('user') ? true:false
+    
     return (
       <BrowserRouter>
           <Routes>
-              {/* <Route exact path='/' element={<PrivateRoute/>}>
-                <Route exact path='/homepage' element={<Homepage/>}/>
-              </Route> */}
-              <Route path='/' element={<Landingpage/>}/>
-              <Route path='/homepage' element={<Homepage/>}/>
+              <Route path='/' element={<SignIn/>}/>
+              <Route element={<PrivateRoute isLogged={isLogged} />}>
+                <Route path='/homepage' element={<Homepage/>}/>
+              </Route>
               <Route path='/myshows' element={<MyShows/>}/>
-              <Route path="/landingpage" element={<Landingpage/>}/>
               <Route path="/login" element={<SignIn/>} />
               <Route path="/register" element={<SignUp/>} />
               

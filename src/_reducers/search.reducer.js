@@ -4,9 +4,6 @@ let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user'
 const initialState = user ? { loggedIn: true, user } : {};
 
 export function search(state = {}, action) {
-    console.log('---------')
-    console.log(action)
-    console.log('---------')
     switch (action.type) {
         case searchConstants.SEARCH_REQUEST:
             return {
