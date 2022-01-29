@@ -1,6 +1,6 @@
 import { userConstants } from '../_constants';
 
-let user = JSON.parse(localStorage.getItem('user'));
+let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {};
 const initialState = user ? { loggedIn: true, user } : {};
 
 export function authentication(state = initialState, action) {
@@ -18,10 +18,7 @@ export function authentication(state = initialState, action) {
     case userConstants.LOGIN_FAILURE:
       return {};
     case userConstants.LOGOUT:
-      return {};
-    case userConstants.GOOGLE_OAUTH2: {
-        return action.googleResponse;
-    }  
+      return {}; 
     default:
       return state
   }

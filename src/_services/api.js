@@ -39,6 +39,7 @@ export default class Api {
     invariant(allowedMethods.indexOf(method) !== -1, 'HTTP Method uknown');
     const headers = this.createHeaders();
     const apiUrl = `${ Api.url }${ uri }`;
+    console.log("apiUrl "+apiUrl)
     var resp;
     if (body === '') {
       resp = await fetch(apiUrl, {

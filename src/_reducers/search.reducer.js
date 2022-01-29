@@ -1,6 +1,6 @@
 import { searchConstants } from '../_constants';
 
-let user = JSON.parse(localStorage.getItem('user'));
+let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {};
 const initialState = user ? { loggedIn: true, user } : {};
 
 export function search(state = {}, action) {

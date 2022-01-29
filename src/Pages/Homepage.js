@@ -105,7 +105,7 @@ class Homepage extends React.Component {
                             </Grid>
                         </Grid>
                     </div>
-                    <div className='col-md-1'>{user.data.username}</div>
+                    <div className='col-md-1'>{user.user.email}</div>
                 </div>
                 <Footer/>
             </div>

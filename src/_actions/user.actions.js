@@ -12,7 +12,8 @@ export const userActions = {
     register,
     getAll,
     delete: _delete,
-    loginOAuthGoogle
+    loginOAuthGoogle,
+    loginOAuthFacebook
 };
 
 
@@ -22,30 +23,25 @@ const request = (user) => { return { type: userConstants.LOGIN_REQUEST, user } }
 const success = (user) =>  { return { type: userConstants.LOGIN_SUCCESS, user } }
 const failure = (error) =>  { return { type: userConstants.LOGIN_FAILURE, error } }
 
-function login(username, password) {
-    return dispatch => {
-        dispatch(request({ username }));
-
-        userService.login(username, password)
-            .then(
-                user => { 
-                    dispatch(success(user));
-                    history.push('/homepage');
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
-    };
-
-    function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
-    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+function login(email, password) {
+    return async (dispatch) => { 
+        try {
+            dispatch(request(email));
+            const response = await authService.login(email, password);
+            if(response && response.token) {
+                localStorage.setItem('user', JSON.stringify(response));
+            }
+            dispatch(success(email));
+            history.push('/homepage');
+        } catch(e) {
+            console.error(`Error code: ${e.code}\nError details: ${e.body}`);
+            dispatch(failure(`Couldn't login user: ${email}`));
+        }   
+    }
 }
 
 function logout() {
-    userService.logout();
+    authService.logout();
     history.push('/landingpage');
     return { type: userConstants.LOGOUT };
 }
@@ -53,8 +49,8 @@ function logout() {
 function register(user) {
     return dispatch => {
         dispatch(request(user));
-
-        userService.register(user)
+        console.log(user)
+        authService.register(user)
             .then(
                 user => { 
                     dispatch(success());
@@ -120,7 +116,27 @@ function loginOAuthGoogle(){
                 history.push('/homepage');
             }
         }
-        window.open(`${Api.url}/api/auth/google`, 'Google OAuth', "height=615,width=605"); 
+        window.open(`${Api.url}/api/v1/auth/google`, 'Google OAuth', "height=615,width=605"); 
+        window.addEventListener("message", receiveMessage, false);
+    }
+}
+
+function loginOAuthFacebook(){
+    return (dispatch) => {
+        function receiveMessage(event) {
+            if (event.origin !== Api.url) {
+                dispatch(failure(`Couldn't login via OAuth Facebook!`));
+                return;
+            }
+            if(event.data) {
+                console.log(event.data)
+                localStorage.setItem('user', event.data);
+                const data = JSON.parse(event.data);
+                dispatch(success(data.user.email));
+                history.push('/homepage');
+            }
+        }
+        window.open(`${Api.url}/api/v1/auth/facebook`, 'Facebook OAuth', "height=615,width=605"); 
         window.addEventListener("message", receiveMessage, false);
     }
 }
